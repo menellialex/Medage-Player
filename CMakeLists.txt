@@ -13,10 +13,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
+find_package(Qt6 REQUIRED COMPONENTS QuickControls2)
 
 set(PROJECT_SOURCES
+        settings.h
         main.cpp
         qml.qrc
+        settings.cpp
+        pyPlayer.py
+        mainloop.py
+        windowConnect.py
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -58,4 +64,8 @@ set_target_properties(MedagePlayer PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_import_qml_plugins(MedagePlayer)
     qt_finalize_executable(MedagePlayer)
+
+target_link_libraries(MedagePlayer PRIVATE Qt6::QuickControls2)
+target_link_libraries(MedagePlayer PRIVATE Qt6::Core)
+
 endif()
