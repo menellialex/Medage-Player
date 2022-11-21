@@ -20,6 +20,9 @@ set(PROJECT_SOURCES
         main.cpp
         qml.qrc
         settings.cpp
+        pyPlayer.py
+        mainloop.py
+        windowConnect.py
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -63,5 +66,6 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(MedagePlayer)
 
 target_link_libraries(MedagePlayer PRIVATE Qt6::QuickControls2)
+target_link_libraries(MedagePlayer PRIVATE Qt6::Core)
 
 endif()

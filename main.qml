@@ -4,6 +4,7 @@ import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 
 Window {
+    id: root
     width: 750
     height: 480
     visible: true
@@ -11,15 +12,27 @@ Window {
 
     Button {
         id: button
-        x: 97
+        x: 92
         y: 400
+        width: 75
+        height: 20
         text: qsTr("Pause/Play")
+
+        Connections {
+            target: button
+            function onPressed()
+            {
+
+            }
+        }
     }
 
     Button {
         id: button1
-        x: 182
+        x: 163
         y: 400
+        width: 75
+        height: 20
         text: qsTr("Forward")
     }
 
@@ -27,6 +40,8 @@ Window {
         id: button2
         x: 20
         y: 400
+        width: 75
+        height: 20
         text: qsTr("Backwards")
     }
 
