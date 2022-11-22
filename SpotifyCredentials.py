@@ -1,0 +1,3 @@
+CLIENT_ID='58cd455662ae4fe39739f99bc8b684df'
+CLIENT_SECRET='ab7ab15e8562406599ca21bbd55d2473'
+REDIRECT_URI='https://www.google.com/'
