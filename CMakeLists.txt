@@ -23,7 +23,13 @@ set(PROJECT_SOURCES
         pyPlayer.py
         mainloop.py
         windowConnect.py
+        Songs/sf.mp3
+        Playlists/library.txt
+        ITCOTD.jpg
+        fileio.h
+        fileio.cpp
 )
+
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(MedagePlayer

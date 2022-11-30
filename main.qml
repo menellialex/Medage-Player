@@ -2,61 +2,42 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
+import QtMultimedia 6.3
+import QtQuick3D 6.4
+import FileIO 1.0
 
 Window {
     id: root
     width: 750
     height: 480
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Medage Player")
 
-    Button {
-        id: button
-        x: 92
-        y: 400
-        width: 75
-        height: 20
-        text: qsTr("Pause/Play")
-
-        Connections {
-            target: button
-            function onPressed()
-            {
-
-            }
-        }
+    PlayControl {
+        //this controls the backwards, forwards, pause and play features
+        mediaPlayer: mediaPlayer
     }
 
-    Button {
-        id: button1
-        x: 163
-        y: 400
-        width: 75
-        height: 20
-        text: qsTr("Forward")
+    FileIO {
+        //fileio item for everything lol
+        id: fileio
+        onError: {console.log(msg);}
     }
 
-    Button {
-        id: button2
-        x: 20
-        y: 400
-        width: 75
-        height: 20
-        text: qsTr("Backwards")
-    }
 
-    Image {
-        id: image
-        x: 44
-        y: 51
-        width: 171
-        height: 157
-        source: "qrc:/qtquickplugin/images/template_image.png"
-        fillMode: Image.PreserveAspectFit
+    Slider {
+        id: volumeSlider
+        x: 43
+        y: 453
+        width: 167
+        height: 20
+        value: 1
+        from: 0.
+        to: 1.
     }
 
     Text {
-        id: text1
+        id: title
         x: 93
         y: 226
         width: 74
@@ -69,7 +50,7 @@ Window {
     }
 
     Text {
-        id: text2
+        id: artist
         x: 102
         y: 260
         width: 55
@@ -134,11 +115,12 @@ Window {
             y: 0
             width: 125
             height: 40
-            text: qsTr("Tab Button")
+            text: qsTr("Settings")
         }
     }
 
     //allows for differing tabs.
+    //This stack is for the library, playlist, recommendation and settings tab
     StackLayout {
         id: stackLayout
         x: 250
@@ -150,7 +132,9 @@ Window {
         Item {
             //anything in library tab goes here
             id: libraryTab
+            Library {
 
+            }
         }
         Item {
             //anything in playlist tab goes here
@@ -166,35 +150,84 @@ Window {
             //anything in settings tab goes here
             id: settingsTab
 
-            ComboBox
-            {
-                id: styleDropdown
-                x: 286
-                y: 41
-                width: 167
-                height: 20
-                editable: true
-                model: ListModel
-                {
-                    id: dropdownModel
-                    ListElement { Text: "Default" }
-                    ListElement { Text: "Material" }
-                    ListElement { Text: "Dark" }
-                }
-                onAccepted:
-                {
-                    if (combo.find(currentText) === -1)
-                    {
-                        dropdownModel.append({text: editText})
-                        currentIndex = combo.fine(editText)
-                    }
-                }
-            }
+            SettingsTab{
+                mediaPlayer: mediaPlayer
+                fileio: fileio
 
+            }
 
         }
 
     }
+
+    StackLayout {
+        id: stackLayout1
+        x: 39
+        y: 45
+        width: 176
+        height: 160
+        currentIndex: tabbar1.currentIndex
+
+        Item {
+            id: albumTab
+            Image {
+                id: image
+                width: 171
+                height: 157
+                source: "ITCOTD.png"
+                fillMode: Image.PreserveAspectFit
+            }
+        }
+
+        Item {
+            id: visulizerTab
+
+            Text {
+                id: text4
+                x: 46
+                y: 53
+                width: 109
+                height: 56
+                text: qsTr("Hello World!")
+                font.pixelSize: 12
+            }
+        }
+    }
+
+    TabBar {
+        x: 47
+        y: 20
+        width: 159
+        height: 25
+        id: tabbar1
+
+        TabButton {
+            id: tabbutton4
+            text: qsTr("Album Cover")
+        }
+
+        TabButton {
+            id: tabbutton5
+            text: qsTr("Visualizer")
+        }
+
+    }
+
+    Item {
+        id: __materialLibrary__
+    }
+
+    MediaPlayer {
+        id: mediaPlayer
+        audioOutput: audioOut
+        source: "Songs/sf.mp3"
+    }
+
+    AudioOutput {
+        id: audioOut
+        volume: volumeSlider.value
+    }
+
 }
 
 
