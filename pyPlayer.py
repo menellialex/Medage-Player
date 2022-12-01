@@ -44,9 +44,10 @@ class MusicPlayer:
     
     def song_queue(self):
         if mx.get_busy == False:
-            songIndex += 1
+            self.songIndex += 1
             self.stop()
             self.song = self.songQueue[self.songIndex]
+
     
     def pause(self):
         # Pauses the song
