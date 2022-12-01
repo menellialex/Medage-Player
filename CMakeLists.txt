@@ -24,7 +24,7 @@ set(PROJECT_SOURCES
         mainloop.py
         windowConnect.py
         Songs/sf.mp3
-        Playlists/library.txt
+        Playlists/Library.txt
         ITCOTD.jpg
         fileio.h
         fileio.cpp
