@@ -41,20 +41,6 @@ Item {
     }
 
     Button {
-        id: stopButton
-        x: 92
-        y: 420
-        width: 75
-        height: 20
-        text: qsTr("Stop")
-
-        onClicked: {
-            mediaPlayer.stop();
-            console.log("stop button hit, play state is now: ", mediaPlayer.playbackState);
-        }
-    }
-
-    Button {
         id: button1
         x: 163
         y: 400
@@ -70,6 +56,16 @@ Item {
         width: 75
         height: 20
         text: qsTr("Backwards")
+
+        onClicked: {
+            //restart song
+            mediaPlayer.stop();
+            mediaPlayer.play();
+        }
+
+        onDoubleClicked: {
+            //we want to go back one song.
+        }
     }
 
     //States for the pause and play button
