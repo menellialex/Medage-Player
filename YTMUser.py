@@ -1,7 +1,7 @@
 from ytmusicapi import YTMusic
 import YTMCredentials as cred
 
-class YTMData:
+class YTMUser:
     def __init__(self):
         self.headers = cred.headersString
         self.authorized = False
@@ -10,10 +10,9 @@ class YTMData:
         YTMusic.setup(filepath="headers_auth.json", headers_raw=self.headers)
         self.authorized = True
 
-#Method to get song's album cover
-#Method to get user playlists
-#Method to get user's request headers with GUI?
-
+# To Do: Duplicate functionality of SpotifyUser
+# Shelved for now
+# But class left in for potential addition
 
 
 

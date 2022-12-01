@@ -1,21 +1,22 @@
-import SpotifyCredentials as sc
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyClientCredentials
+import SpotifyCredentials as creds
 
 class SpotifyData:
     def __init__(self):
-        self.clientID = sc.CLIENT_ID
-        self.clientSecret = sc.CLIENT_SECRET
-        self.redirectUri = sc.REDIRECT_URI
-
-        self.sp = 0
-        self.authorized = False
-
-    def setup(self):
-        #Redirects browser and prompts terminal input
-        scope = "user-library-read"
-        self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.clientID, client_secret=self.clientSecret, redirect_uri=self.redirectUri, scope=scope))
+        self.clientID = creds.CLIENT_ID
+        self.clientSecret = creds.CLIENT_SECRET
+        self.sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id = self.clientID, client_secret = self.clientSecret))
         self.authorized = True
 
-#Method to get song's album cover
-#Method to get user playlists
+    def get_cover_art(self, name, artist):
+        query = name + ' ' + artist
+        result = self.sp.search(query, limit=1, type='track')
+
+        items = result['tracks']['items']
+        first_item = items[0]
+
+        cover_image_url = first_item['album']['images'][0]['url']
+        # Width and height of image are always 640
+
+        return cover_image_url
