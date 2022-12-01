@@ -28,6 +28,15 @@ Item {
         }
     }
 
+    Text {
+        id: styleText
+        x: 40
+        y: 40
+        width: 60
+        height: 20
+        text: qsTr("Style Dropdown")
+    }
+
     ComboBox
     {
         id: styleDropdown
@@ -53,29 +62,24 @@ Item {
         }
     }
 
-    TextInput {
-        id: fileInputSongs
-        x: 286
-        y: 120
-        width: 147
+    Text {
+        id: addSongs
+        text: qsTr("Add Songs from File Explorer")
+        x: 40
+        y: 80
+        width: 60
         height: 20
-        text: "Enter Here"
-
-        onAccepted: {
-            url = getText();
-            loadUrl(url);
-        }
     }
 
     Button {
-        x: 433
-        y: 120
-        width: 20
+        x: 286
+        y: 80
+        width: 167
         height: 20
+        text: "Open File Explorer"
 
         onClicked: {
             fileDialog.open();
         }
     }
-
 }

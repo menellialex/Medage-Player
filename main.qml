@@ -19,9 +19,15 @@ Window {
     }
 
     FileIO {
-        //fileio item for everything lol
+        //fileio item for everything
         id: fileio
         onError: {console.log(msg);}
+    }
+
+    SongController {
+        //This is the slider and song timer text.
+        id: songController
+        mediaPlayer: mediaPlayer
     }
 
 
@@ -220,7 +226,6 @@ Window {
     MediaPlayer {
         id: mediaPlayer
         audioOutput: audioOut
-        source: "Songs/sf.mp3"
     }
 
     AudioOutput {
