@@ -83,6 +83,7 @@ class SpotifyUser:
 
     def get_top_songs(self):
         top_songs_list = []
+        #pprint.pprint(self.sp.current_user_top_tracks(time_range='short_term', limit=50))
         for sp_range in self.ranges:
             print("range:", sp_range)
             results = self.sp.current_user_top_tracks(time_range=sp_range, limit=50)
