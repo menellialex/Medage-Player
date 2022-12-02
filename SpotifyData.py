@@ -9,7 +9,7 @@ class SpotifyData:
         self.sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id = self.clientID, client_secret = self.clientSecret))
         self.authorized = True
 
-    def get_cover_art(self, name, artist):
+    def get_cover_art_by_song(self, name, artist):
         query = name + ' ' + artist
         result = self.sp.search(query, limit=1, type='track')
 
@@ -20,3 +20,7 @@ class SpotifyData:
         # Width and height of image are always 640
 
         return cover_image_url
+
+    # Can add method for fetching cover art by album
+
+    # Potentially add lyrics fetching method?
