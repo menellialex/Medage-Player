@@ -1,7 +1,12 @@
+# Written by Niles Gleason
+# Last modified 12/5/2022
+# Trine University
+
 import SpotifyCredentials as creds
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+# This class creates an object to get Spotify user data from
 class SpotifyUser:
     def __init__(self):
         self.clientID = creds.CLIENT_ID
@@ -10,6 +15,7 @@ class SpotifyUser:
 
         self.scope = 'playlist-read-private user-library-read user-top-read user-follow-read'
         self.ranges = ['short_term', 'medium_term', 'long_term']
+        # Short term is around 4 weeks, medium term is around 6 months, and long term is since beginning of account
 
         self.sp = None
         self.user_id = ''
@@ -24,14 +30,15 @@ class SpotifyUser:
         self.authorized = True
         self.user_id = self.sp.me()['id']
 
-
     def get_all_playlists(self):
-        # Returns an array of 2D arrays representing each of the user's playlists (a 3D array)
-        # Every 2D playlist array is built of arrays containing a song's metadata
-        # Playlist info list structure
+        # Returns an array of 2D lists representing each of the user's playlists (a 3D list)
+        # Every 2D playlist list is built of lists containing a song's metadata
+        # Playlist info lists structure
         # [0] = Playlist name, [1] = Number of songs in playlist, [2] = Description, [3] = Link to playlist's cover image
-        # Song axis structure
+        # Song lists structure
         # [0] = Song Name, [1] = Artist, [2] = Album Name, [3] = Popularity Number
+        # Format of returned list is:
+        # [ [[playlistData1 list], [songData1 list], [songData2 list], ...], [[playlistData2 list], [songData1 list], [songData2 list], ...]  ]
 
         all_playlists_list = []
 
@@ -81,9 +88,9 @@ class SpotifyUser:
 
         return top_artists_list
 
-    # This method returns a list of exactly 3 2D list of the user's top songs, for short, medium, and long term, in that short
-    # Each of the 3 2D song lists are in the usual format, where each item in the list is another list of a song's metadata
-    # There are 3 of them because
+    # This method returns a list of exactly 3 2D list of the user's top songs, for short, medium, and long term, in that order
+    # Each of the 3 2D song lists are in the same format as the song lists in the all playlists method
+    # Format is [ [[songName, artistName, albumName, popularityValue], ...](for short term), [ ... ](medium), [ ... ](long) ]
     def get_top_songs(self):
         top_songs_list = []
 
@@ -99,6 +106,9 @@ class SpotifyUser:
         saved_songs_list = self.song_metadata_to_list(raw_saved_songs)
         return saved_songs_list
 
+    # This method returns a list of the user's saved albums
+    # Each saved album is represented as a list of song names, but the first item contains the album's name and artist
+    # Format is [ [artistName, albumName], songName1, songName2, ... ]
     def get_saved_albums(self):
         # Make a list for all the user's albums
         saved_albums_list = []
@@ -127,16 +137,22 @@ class SpotifyUser:
 
         return saved_albums_list
 
+    # This method returns a 2D list of the user's followed artists
+    # Format of list is [ [artistName1,[genre1, genre2, ...]], [artistName2[genre1, genre2, ...]], ...]
     def get_followed_artists(self):
         followed_artists_list = []
 
         followed_artists = self.sp.current_user_followed_artists()
 
         for artist in enumerate(followed_artists['artists']['items']):
-            followed_artists_list.append(artist[1]['name'])
-            followed_artists_list.append(artist[1]['genres'])
+            this_artist = []
+            this_artist.append(artist[1]['name'])
+            this_artist.append(artist[1]['genres'])
+            followed_artists_list.append(this_artist)
 
-        print(followed_artists_list)
+        return followed_artists_list
+
+# Utility Functions
 
     # Utility function to format select song metadata into a list and return it
     def song_metadata_to_list(self, results):

@@ -1,6 +1,11 @@
+# Written by Niles Gleason
+# Last modified 12/5/2022
+# Trine University
+
 from ytmusicapi import YTMusic
 import YTMCredentials as cred
 
+# This class creates an object to get YouTube Music user data from
 class YTMUser:
     def __init__(self):
         self.headers = cred.headersString

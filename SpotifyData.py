@@ -1,3 +1,7 @@
+# Written by Niles Gleason
+# Last modified 12/5/2022
+# Trine University
+
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import SpotifyCredentials as creds
