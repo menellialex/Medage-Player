@@ -1,6 +1,3 @@
-# STILL WORK IN PROGRESS
-import pprint
-
 import SpotifyCredentials as creds
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -18,14 +15,15 @@ class SpotifyUser:
         self.user_id = ''
         self.authorized = False
 
-
+    # This method is needed for the other methods to work
+    # Separated from init() to for better control of when log-in prompt appears
+    # This method will open up a page on the user's browser, prompting them to enter their Spotify credentials
+    # They are then asked to enter the URL they were redirected to after entering their details
     def setup(self):
-        # Will open up a page on the user's browser, prompting them to enter their Spotify credentials
-        # They are then asked to enter the URL they were redirected to after entering their details
-
         self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.clientID, client_secret=self.clientSecret, redirect_uri=self.redirectUri, scope=self.scope))
         self.authorized = True
         self.user_id = self.sp.me()['id']
+
 
     def get_all_playlists(self):
         # Returns an array of 2D arrays representing each of the user's playlists (a 3D array)
@@ -35,8 +33,9 @@ class SpotifyUser:
         # Song axis structure
         # [0] = Song Name, [1] = Artist, [2] = Album Name, [3] = Popularity Number
 
-        playlists = self.sp.current_user_playlists()
         all_playlists_list = []
+
+        playlists = self.sp.current_user_playlists()
 
         for playlist in playlists['items']:
             if playlist['owner']['id'] == self.user_id:
@@ -54,20 +53,21 @@ class SpotifyUser:
                     playlist_info_list.append(self.sp.playlist_cover_image(playlist['id'])[0]['url'])
                 except:
                     playlist_info_list.append('')
+                # Add that as first entry among playlists
                 this_playlist_list.append(playlist_info_list)
 
                 # Iterate through and append list of each song's metadata
                 results = self.sp.playlist(playlist['id'], fields="tracks,next")
                 tracks = results['tracks']
-                this_playlist_list.append(self.song_metadata_to_list(tracks))
-                while tracks['next']:
-                    tracks = self.sp.next(tracks)
-                    this_playlist_list.append(self.song_metadata_to_list(tracks))
+                this_playlist_list += self.song_metadata_to_list(tracks)
 
             # Append the list of playlist's contents
             all_playlists_list.append(this_playlist_list)
         return all_playlists_list
 
+    # This method is meant to return a list containing exactly 3 lists
+    # The lists contain the names of the user's top artists for the short, medium, and long terms, in that order
+    # This is the only method I couldn't test myself, so it may not work as expected
     def get_top_artists(self):
         top_artists_list = []
 
@@ -81,33 +81,26 @@ class SpotifyUser:
 
         return top_artists_list
 
+    # This method returns a list of exactly 3 2D list of the user's top songs, for short, medium, and long term, in that short
+    # Each of the 3 2D song lists are in the usual format, where each item in the list is another list of a song's metadata
+    # There are 3 of them because
     def get_top_songs(self):
         top_songs_list = []
-        #pprint.pprint(self.sp.current_user_top_tracks(time_range='short_term', limit=50))
+
         for sp_range in self.ranges:
-            print("range:", sp_range)
             results = self.sp.current_user_top_tracks(time_range=sp_range, limit=50)
-            top_songs_list = self.song_metadata_to_list(results)
-            # for item in enumerate(results['items']):
-            #    top_songs_list.append(self.song_to_list(results))
-            #    print(i, item['name'], '//', item['artists'][0]['name'])
-            return top_songs_list
+            songs_for_this_range = self.song_metadata_to_list_top_songs(results)
+            top_songs_list.append(songs_for_this_range)
+
+        return top_songs_list
 
     def get_saved_songs(self):
-        saved_songs_list = []
-
-        results = self.sp.current_user_saved_tracks()
-
-        saved_songs_list.append(self.song_metadata_to_list(results))
-
-        while results['next']:
-            results = self.sp.next(results)
-            saved_songs_list.append(self.song_metadata_to_list(results))
-
+        raw_saved_songs = self.sp.current_user_saved_tracks()
+        saved_songs_list = self.song_metadata_to_list(raw_saved_songs)
         return saved_songs_list
 
     def get_saved_albums(self):
-        # Make a list for all of the user's albums
+        # Make a list for all the user's albums
         saved_albums_list = []
 
         saved_albums = self.sp.current_user_saved_albums()
@@ -132,13 +125,13 @@ class SpotifyUser:
             # Finally, add the albums list to the list of all the albums
             saved_albums_list.append(this_album_list)
 
-        return this_album_list
-
+        return saved_albums_list
 
     def get_followed_artists(self):
         followed_artists_list = []
 
         followed_artists = self.sp.current_user_followed_artists()
+
         for artist in enumerate(followed_artists['artists']['items']):
             followed_artists_list.append(artist[1]['name'])
             followed_artists_list.append(artist[1]['genres'])
@@ -160,7 +153,22 @@ class SpotifyUser:
 
         return songs_list
 
-    # Utility function for the get_saved_albums() function
+    # Utility function for the get_top_songs() method
+    def song_metadata_to_list_top_songs(self, results):
+        songs_list = []
+
+        for item in enumerate(results['items']):
+            song_info_list = []
+            track = item[1]
+            song_info_list.append(track['name'])
+            song_info_list.append(track['artists'][0]['name'])
+            song_info_list.append(track['album']['name'])
+            song_info_list.append(track['popularity'])
+            songs_list.append(song_info_list)
+
+        return songs_list
+
+    # Utility function for the get_saved_albums() method
     def song_names_to_list(self, results):
         songs_names_list = []
 
