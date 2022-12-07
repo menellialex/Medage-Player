@@ -9,3 +9,13 @@ Windows
 6. In \Deploy, copy the MedagePlayer.exe file as well as qml.qrc as well as any file ending in .qml
 7. In the file explorer window with the Qt bin open, type CMD in the navigation bar. Verify cmd opens with C:\Qt\6.4.1\mingw_64\bin>
 8. Enter "windeployqt --qmldir {path to \Deploy} {path to \Deploy}". Verify by navigating to the Deploy folder and MedagePlayer.exe launches.
+
+Linux
+0. Download linuxdeploy.appimage as well as linuxdeploy-plugin-qt.appimage from the github links below https://github.com/linuxdeploy/linuxdeploy/releases https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases
+1. Using a vector editing software, make an icon file that's the same name as the executable
+2. Save those in a memorable folder and give each executable privileges.
+3. In Qt Creator, build a release kit of the project.
+4. In a new file explorer window, make a new folder called Deploy
+5. In /Deploy, copy the MedagePlayer executable, qml.qrc as well as any file ending in .qml
+6. Open a terminal window in the /Deploy folder. Verify pwd has /Deploy at the end
+7. In the terminal type "{path/to}/linuxdeploy.AppImage --appdir AppDir -e ./MedagePlayer --create-desktop-file -i MedagePlayer.svg --output appimage". Verify there's a new file in the /Deploy directory named MedagePlayer with an appimage extension
