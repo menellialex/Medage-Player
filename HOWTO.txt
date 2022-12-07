@@ -1,0 +1,10 @@
+How to Export Medage Player for Standalone use
+Windows
+0. Ensure you're not using AppsAnywhere
+1. Navigate to the Qt Path (eg, "C:\Qt\6.4.1\mingw_64\bin")
+2. Verify "windeployqt.exe" exists
+3. In Qt Creator, build a release kit of the project
+4. In a new file explorer window, make a new folder called Deploy
+5. In \Deploy, copy the MedagePlayer.exe file as well as qml.qrc as well as any file ending in .qml
+6. In the file explorer window with the Qt bin open, type CMD in the navigation bar. Verify cmd opens with C:\Qt\6.4.1\mingw_64\bin>
+7. Enter "windeployqt --qmldir {path to \Deploy} {path to \Deploy}". Verify by navigating to the Deploy folder and MedagePlayer.exe launches.
