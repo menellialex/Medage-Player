@@ -4,11 +4,13 @@ import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 import QtMultimedia 6.3
 import QtQuick3D 6.4
+import SongQueue 1.0
 
 Item {
     id: pausePlay
 
     required property MediaPlayer mediaPlayer
+    required property SongQueue songQueue
     property int playerState: mediaPlayer.playbackState
 
     Button {
@@ -21,7 +23,6 @@ Item {
 
         onClicked: {
             mediaPlayer.pause();
-            console.log("pause button hit, play state is now: ", mediaPlayer.playbackState);
         }
     }
 
@@ -35,8 +36,6 @@ Item {
 
          onClicked: {
              mediaPlayer.play();
-             console.log("play button hit, play state is now: ", mediaPlayer.playbackState);
-             console.log("the loaded song is: ", mediaPlayer.activeAudioTrack);
          }
     }
 
@@ -47,6 +46,16 @@ Item {
         width: 75
         height: 20
         text: qsTr("Forward")
+        onClicked: {
+            if (songQueue.nextInLine() === true)
+            {
+                mediaPlayer.source = songQueue.songGetter(1);
+            }
+            else
+            {
+                console.log("No song next");
+            }
+        }
     }
 
     Button {
@@ -65,6 +74,14 @@ Item {
 
         onDoubleClicked: {
             //we want to go back one song.
+            if (songQueue.playedLast() === true)
+            {
+                mediaPlayer.source = songGetter(-1);
+            }
+            else
+            {
+                console.log("no song played last");
+            }
         }
     }
 
