@@ -5,6 +5,7 @@ import QtQuick.Layouts 6.3
 import QtMultimedia 6.3
 import QtQuick3D 6.4
 import FileIO 1.0
+import SongQueue 1.0
 
 Window {
     id: root
@@ -13,9 +14,15 @@ Window {
     visible: true
     title: qsTr("Medage Player")
 
+    SongQueue {
+        //queue for the songs
+        id: songQueue
+    }
+
     PlayControl {
         //this controls the backwards, forwards, pause and play features
         mediaPlayer: mediaPlayer
+        SongQueue: songQueue
     }
 
     FileIO {
