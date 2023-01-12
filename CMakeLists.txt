@@ -28,31 +28,6 @@ set(PROJECT_SOURCES
         ITCOTD.jpg
         fileio.h
         fileio.cpp
-        SpotifyCredentials.py
-        SpotifyData.py
-        SpotifyUser.py
-        YTMCredentials.py
-        YTMUser.py
-        SongQueue.h
-        SongQueue.cpp
-)
-
-qt6_add_qml_module(FileIO
-    URI FileIO
-    VERSION 1.0
-    OUTPUT_DIRECTORY FileIO
-    SOURCES
-        fileio.h
-        fileio.cpp
-)
-
-qt6_add_qml_module(SongQueue
-    URI SongQueue
-    VERSION 1.0
-    OUTPUT_DIRECTORY SongQueue
-    SOURCES
-        songqueue.h
-        songqueue.cpp
 )
 
 
@@ -83,8 +58,6 @@ target_compile_definitions(MedagePlayer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(MedagePlayer
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
-target_link_libraries(MedagePlayer PRIVATE Qt6::QuickControls2)
-target_link_libraries(MedagePlayer PRIVATE Qt6::Core)
 
 set_target_properties(MedagePlayer PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -97,5 +70,8 @@ set_target_properties(MedagePlayer PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_import_qml_plugins(MedagePlayer)
     qt_finalize_executable(MedagePlayer)
+
+target_link_libraries(MedagePlayer PRIVATE Qt6::QuickControls2)
+target_link_libraries(MedagePlayer PRIVATE Qt6::Core)
 
 endif()
