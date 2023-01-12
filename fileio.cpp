@@ -47,6 +47,7 @@ bool FileIO::write(const QString& data)
     {
         return false;
     }
+
     QFile file(mSource);
     if (!file.open(QFile::WriteOnly|QFile::Truncate))
     {
