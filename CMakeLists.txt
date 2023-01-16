@@ -31,8 +31,6 @@ set(PROJECT_SOURCES
         SpotifyCredentials.py
         SpotifyData.py
         SpotifyUser.py
-        YTMCredentials.py
-        YTMUser.py
         SongQueue.h
         SongQueue.cpp
 )
@@ -51,8 +49,8 @@ qt6_add_qml_module(SongQueue
     VERSION 1.0
     OUTPUT_DIRECTORY SongQueue
     SOURCES
-        songqueue.h
-        songqueue.cpp
+        SongQueue.h
+        SongQueue.cpp
 )
 
 
