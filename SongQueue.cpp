@@ -1,4 +1,4 @@
-#include "songqueue.h"
+#include "SongQueue.h"
 #include <vector>
 #include <QObject>
 #include <QUrl>

@@ -5,7 +5,7 @@
 #include <QProcess>
 #include <QQmlContext>
 #include "fileio.h"
-#include "songqueue.h"
+#include "SongQueue.h"
 
 int main(int argc, char *argv[])
 {
