@@ -25,7 +25,11 @@ if __name__ == '__main__':
             user.setup()
         elif user_input == '2':
             print('')
-            pprint.pprint(user.get_all_playlists())
+            playlists = user.get_all_playlists()
+            if playlists == "":
+                print("No playlists")
+            else:
+                pprint.pprint(playlists)
         elif user_input == '3':
             print('')
             pprint.pprint(user.get_top_songs())
@@ -34,13 +38,25 @@ if __name__ == '__main__':
             pprint.pprint(user.get_top_artists())
         elif user_input == '5':
             print('')
-            pprint.pprint(user.get_saved_songs())
+            ssongs = user.get_saved_songs()
+            if ssongs == "":
+                print("No saved songs")
+            else:
+                pprint.pprint(ssongs)
         elif user_input == '6':
             print('')
-            pprint.pprint(user.get_saved_albums())
+            salbums = user.get_saved_albums()
+            if salbums == "":
+                print("No saved albums")
+            else:
+                pprint.pprint(salbums)
         elif user_input == '7':
             print('')
-            pprint.pprint(user.get_followed_artists())
+            fartists = user.get_followed_artists()
+            if fartists == "":
+                print("No followed artists")
+            else:
+                pprint.pprint(fartists)
         elif user_input == '8':
             print('')
             name = input('Enter name of song: ')

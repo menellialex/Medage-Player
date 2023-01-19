@@ -26,7 +26,11 @@ class SpotifyUser:
     # This method will open up a page on the user's browser, prompting them to enter their Spotify credentials
     # They are then asked to enter the URL they were redirected to after entering their details
     def setup(self):
-        self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.clientID, client_secret=self.clientSecret, redirect_uri=self.redirectUri, scope=self.scope))
+        try:
+            self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.clientID, client_secret=self.clientSecret, redirect_uri=self.redirectUri, scope=self.scope))
+        except:
+            print("Setup Failed")
+            return
         self.authorized = True
         self.user_id = self.sp.me()['id']
 
@@ -41,8 +45,11 @@ class SpotifyUser:
         # [ [[playlistData1 list], [songData1 list], [songData2 list], ...], [[playlistData2 list], [songData1 list], [songData2 list], ...]  ]
 
         all_playlists_list = []
-
-        playlists = self.sp.current_user_playlists()
+        
+        try:
+            playlists = self.sp.current_user_playlists()
+        except:
+            return "no"
 
         for playlist in playlists['items']:
             if playlist['owner']['id'] == self.user_id:
@@ -102,7 +109,11 @@ class SpotifyUser:
         return top_songs_list
 
     def get_saved_songs(self):
-        raw_saved_songs = self.sp.current_user_saved_tracks()
+        try:
+            raw_saved_songs = self.sp.current_user_saved_tracks()
+        except:
+            return "no"
+        
         saved_songs_list = self.song_metadata_to_list(raw_saved_songs)
         return saved_songs_list
 
@@ -112,8 +123,11 @@ class SpotifyUser:
     def get_saved_albums(self):
         # Make a list for all the user's albums
         saved_albums_list = []
-
-        saved_albums = self.sp.current_user_saved_albums()
+        
+        try:
+            saved_albums = self.sp.current_user_saved_albums()
+        except:
+            return "no"
 
         for album in saved_albums['items']:
             # First create a list for this album's songs
@@ -141,8 +155,11 @@ class SpotifyUser:
     # Format of list is [ [artistName1,[genre1, genre2, ...]], [artistName2[genre1, genre2, ...]], ...]
     def get_followed_artists(self):
         followed_artists_list = []
-
-        followed_artists = self.sp.current_user_followed_artists()
+        
+        try:
+            followed_artists = self.sp.current_user_followed_artists()
+        except:
+            return "no"
 
         for artist in enumerate(followed_artists['artists']['items']):
             this_artist = []
