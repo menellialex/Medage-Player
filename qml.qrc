@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>PlayControl.qml</file>
+        <file>Library.qml</file>
+        <file>SettingsTab.qml</file>
+        <file>SongController.qml</file>
     </qresource>
 </RCC>

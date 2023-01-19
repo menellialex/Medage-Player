@@ -1,0 +1,38 @@
+Sean Davis, Alex Menelli, Niles Gleason
+Dr. Mahesh Khadka
+SE353- Software Engineering
+Phase 4- Introduction & Overview Document
+
+Introduction & overview. The introduction document (200 to 400 words) should concisely
+indicate changes and additions, if any, of your project’s specification and design. The overview
+file should provide a summary (1 or 2 pages) of your source code, indicating all program units
+and modules included in the code. Both introduction and overview files should be submitted in a
+zip file that should also contain the entire source code.
+
+Introduction
+===================================================================================================
+Medage Player was designed with Qt Creator and Qt 6.4. Spotify services were implemented with
+Python. The user doesn't add the files to play via drag and drop, but rather a button in the
+settings menu to load through the file browser. Due to time constraints, about half of our Level 1
+requirements were pushed back, such as the visualizer, AI recommendation system, and Library system.
+Medage Player compiles anywhere Qt Creator can compile, given the right libraries are installed. We
+currently have stand-alone Windows and Linux executables using windeployqt and linuxdeploy
+respectively. The files relating to YouTube Music were early work on implementing YouTube music that
+got shelved. The files relating to the PyPlayer was an early implementation of the music-playing
+functionality using the Python package PyGame, but was scrapped in favor of the player
+implementation in QML.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Overview
+===================================================================================================
+The source code consists of QML, C++, and python files. QML is an acronym for Qt Modeling Language,
+and it is used to model the UI for the system through libraries such as QtQuick and QtControls.
+It is also used to implement the functionality of playing music. C++ is the language utilized for
+loading the QML files as well as some other modules within Qt. The libraries used within Qt were
+QtQuick, QtQuick3D, QtQuickControls, QtMultimedia, and FileIO. The Python packages used in Spotify
+integration were spotipy and Spotifycredentials. The spotify files can retrieve images of album
+covers as well as plenty of data about the user's spotify account. Specific things that are pulled
+are such things like the user's saved playlists, saved albums, and metadata of each song from given
+collections.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

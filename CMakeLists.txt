@@ -13,11 +13,46 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
+find_package(Qt6 REQUIRED COMPONENTS QuickControls2)
 
 set(PROJECT_SOURCES
+        settings.h
         main.cpp
         qml.qrc
+        settings.cpp
+        pyPlayer.py
+        mainloop.py
+        windowConnect.py
+        Songs/sf.mp3
+        Playlists/Library.txt
+        ITCOTD.jpg
+        fileio.h
+        fileio.cpp
+        SpotifyCredentials.py
+        SpotifyData.py
+        SpotifyUser.py
+        SongQueue.h
+        SongQueue.cpp
 )
+
+qt6_add_qml_module(FileIO
+    URI FileIO
+    VERSION 1.0
+    OUTPUT_DIRECTORY FileIO
+    SOURCES
+        fileio.h
+        fileio.cpp
+)
+
+qt6_add_qml_module(SongQueue
+    URI SongQueue
+    VERSION 1.0
+    OUTPUT_DIRECTORY SongQueue
+    SOURCES
+        SongQueue.h
+        SongQueue.cpp
+)
+
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(MedagePlayer
@@ -46,6 +81,8 @@ target_compile_definitions(MedagePlayer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(MedagePlayer
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+target_link_libraries(MedagePlayer PRIVATE Qt6::QuickControls2)
+target_link_libraries(MedagePlayer PRIVATE Qt6::Core)
 
 set_target_properties(MedagePlayer PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -58,4 +95,5 @@ set_target_properties(MedagePlayer PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_import_qml_plugins(MedagePlayer)
     qt_finalize_executable(MedagePlayer)
+
 endif()
