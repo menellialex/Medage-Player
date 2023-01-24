@@ -30,3 +30,56 @@ class SpotifyData:
     # Can add method for fetching cover art by album
 
     # Potentially add lyrics fetching method?
+
+    def get_songs_by_artist(self, artist):
+        query = artist
+        result = self.sp.search(query, limit=5, type='track')
+
+        items = result['tracks']['items']
+        # first_item = items[0]
+
+        # cover_image_url = first_item['album']['images'][0]['url']
+        # # Width and height of image are always 640
+
+        results = []
+
+        for n in enumerate(items):
+            results.append(n)
+
+        return results
+    
+    def get_songs_by_album(self, album):
+        query = album
+        result = self.sp.search(query, limit=5, type='track')
+
+        items = result['tracks']['items']
+        # first_item = items[0]
+
+        # cover_image_url = first_item['album']['images'][0]['url']
+        # # Width and height of image are always 640
+
+        results = []
+
+        for n in enumerate(items):
+            results.append(n)
+
+        return results
+    
+    def get_songs_by_genre(self, genre):
+        query = genre
+        result = self.sp.search(query, limit=5, type='track')
+
+        items = result['tracks']['items']
+        # first_item = items[0]
+
+        # cover_image_url = first_item['album']['images'][0]['url']
+        # # Width and height of image are always 640
+
+        results = []
+
+        for n in enumerate(items):
+            results.append(n)
+
+        return results
+    
+    
