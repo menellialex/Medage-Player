@@ -49,7 +49,7 @@ class SpotifyUser:
         try:
             playlists = self.sp.current_user_playlists()
         except:
-            return "no"
+            return ""
 
         for playlist in playlists['items']:
             if playlist['owner']['id'] == self.user_id:
@@ -112,7 +112,7 @@ class SpotifyUser:
         try:
             raw_saved_songs = self.sp.current_user_saved_tracks()
         except:
-            return "no"
+            return ""
         
         saved_songs_list = self.song_metadata_to_list(raw_saved_songs)
         return saved_songs_list
@@ -127,7 +127,7 @@ class SpotifyUser:
         try:
             saved_albums = self.sp.current_user_saved_albums()
         except:
-            return "no"
+            return ""
 
         for album in saved_albums['items']:
             # First create a list for this album's songs
@@ -159,7 +159,7 @@ class SpotifyUser:
         try:
             followed_artists = self.sp.current_user_followed_artists()
         except:
-            return "no"
+            return ""
 
         for artist in enumerate(followed_artists['artists']['items']):
             this_artist = []
