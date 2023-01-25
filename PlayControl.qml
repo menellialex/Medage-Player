@@ -4,13 +4,11 @@ import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 import QtMultimedia 6.3
 import QtQuick3D 6.4
-import SongQueue 1.0
 
 Item {
     id: pausePlay
 
     required property MediaPlayer mediaPlayer
-    required property SongQueue songQueue
     property int playerState: mediaPlayer.playbackState
 
     Button {

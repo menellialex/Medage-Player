@@ -5,6 +5,9 @@
 #include "fileio.h"
 #include <QFile>
 #include <QTextStream>
+#include <iostream>
+#include <QtGlobal>
+#include <QLoggingCategory>
 
 FileIO::FileIO(QObject *parent) :
     QObject(parent)
@@ -41,17 +44,19 @@ QString FileIO::read()
     return fileContent;
 }
 
-bool FileIO::write(const QString& data)
+int FileIO::write(const QString& data)
 {
     if (mSource.isEmpty())
     {
-        return false;
+        return 3;
+        printf("no source");
     }
 
     QFile file(mSource);
-    if (!file.open(QFile::WriteOnly|QFile::Truncate))
+    if (file.open(QFile::WriteOnly|QFile::Truncate))
     {
-        return false;
+        return 2;
+        printf("open fail");
     }
 
     QTextStream out(&file);
@@ -59,7 +64,7 @@ bool FileIO::write(const QString& data)
 
     file.close();
 
-    return true;
+    return 0;
 }
 
 

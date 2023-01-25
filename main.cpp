@@ -5,7 +5,7 @@
 #include <QProcess>
 #include <QQmlContext>
 #include "fileio.h"
-#include "songqueue.h"
+#include "SongQueue.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,10 +15,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-
-    //registers fileio and songQueue as QML modules
-    qmlRegisterType<FileIO, 1>("FileIO", 1, 0, "FileIO");
-    qmlRegisterType<songQueue, 1>("SongQueue", 1, 0, "SongQueue");
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
