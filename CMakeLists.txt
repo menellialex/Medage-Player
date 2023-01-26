@@ -29,11 +29,11 @@ set(PROJECT_SOURCES
         ITCOTD.jpg
         fileio.h
         fileio.cpp
-#        SpotifyCredentials.py
-#        SpotifyData.py
-#        SpotifyUser.py
-#        YTMCredentials.py
-#        YTMUser.py
+        SpotifyCredentials.py
+        SpotifyData.py
+        SpotifyUser.py
+        SongQueue.h
+        SongQueue.cpp
 )
 
 qt6_add_qml_module(FileIO
