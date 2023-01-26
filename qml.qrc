@@ -5,7 +5,6 @@
         <file>Library.qml</file>
         <file>SettingsTab.qml</file>
         <file>SongController.qml</file>
-        <file>songqueue.qml</file>
         <file>MetaDataGetter.qml</file>
     </qresource>
 </RCC>
