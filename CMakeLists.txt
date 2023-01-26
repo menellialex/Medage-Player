@@ -32,8 +32,8 @@ set(PROJECT_SOURCES
         SpotifyCredentials.py
         SpotifyData.py
         SpotifyUser.py
-        SongQueue.h
-        SongQueue.cpp
+#        SongQueue.h
+#        SongQueue.cpp
 )
 
 qt6_add_qml_module(FileIO
