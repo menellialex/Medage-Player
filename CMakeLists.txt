@@ -20,11 +20,12 @@ set(PROJECT_SOURCES
         main.cpp
         qml.qrc
         settings.cpp
-        pyPlayer.py
-        mainloop.py
-        windowConnect.py
+#        pyPlayer.py
+#        mainloop.py
+#        windowConnect.py
         Songs/sf.mp3
         Playlists/Library.txt
+        Playlists/Queue.txt
         ITCOTD.jpg
         fileio.h
         fileio.cpp
@@ -36,23 +37,13 @@ set(PROJECT_SOURCES
 )
 
 qt6_add_qml_module(FileIO
-    URI FileIO
+    URI "FileIO"
     VERSION 1.0
     OUTPUT_DIRECTORY FileIO
     SOURCES
         fileio.h
         fileio.cpp
 )
-
-qt6_add_qml_module(SongQueue
-    URI SongQueue
-    VERSION 1.0
-    OUTPUT_DIRECTORY SongQueue
-    SOURCES
-        SongQueue.h
-        SongQueue.cpp
-)
-
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(MedagePlayer

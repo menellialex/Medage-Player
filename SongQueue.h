@@ -1,47 +1,35 @@
 #ifndef SONGQUEUE_H
 #define SONGQUEUE_H
 
-#include <QObject>
-#include <vector>
+#include "qqmlintegration.h"
+#include <QAbstractItemModel>
+#include <QtCore>
 #include <QUrl>
-#include <QtQml>
+#include <vector>
 
-using namespace std;
-
-class songQueue: public QObject
+class songqueue : public QObject
 {
     Q_OBJECT
-
-    Q_PROPERTY(QUrl song READ song WRITE enqueue NOTIFY cantDo);
+    Q_PROPERTY(QUrl song
+                 READ currentsong
+                 WRITE enqueue
+                 NOTIFY onBad)
+    QML_ELEMENT
 
 public:
-    songQueue();
+    explicit songqueue(QObject *parent = nullptr);
 
-    explicit songQueue(QObject *parent = 0);
-
-    Q_INVOKABLE bool nextInLine();
-    Q_INVOKABLE bool playedLast();
-
-    void enqueue(QUrl url)
-    {
-        queue.push_back(url);
-    }
-
-    QUrl song()
-    {
-        QUrl returnUrl = queue[queueIterator];
-        return returnUrl;
-    };
+    QUrl currentsong() {return queue.at(queueiterator);}
 
 public slots:
+    void enqueue(const QUrl newsong) {queue.push_back(newsong);}
 
 signals:
-    void cantDo(const QString url);
-    void error(const QString msg);
+    void onBad(const QUrl newsong);
 
 private:
-    int queueIterator;
-    vector<QUrl> queue;
+    std::vector<QUrl> queue;
+    int queueiterator;
 };
 
 #endif // SONGQUEUE_H

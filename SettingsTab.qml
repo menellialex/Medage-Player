@@ -19,12 +19,31 @@ Item {
     }
 
     FileDialog {
-        id: fileDialog
+        id: fileDialogChooseSong
         title: "Please choose a .mp3, .mp4 or .wav file"
         onAccepted: {
-            mediaPlayer.stop()
-            mediaPlayer.source = fileDialog.currentFile
-            mediaPlayer.play()
+            mediaPlayer.stop();
+            mediaPlayer.source = fileDialogChooseSong.currentFile;
+            mediaPlayer.play();
+        }
+    }
+
+    FileDialog {
+        id: fileDialogTest
+        title: "Choose a .mp3, .mp4 or .wav file"
+        onAccepted: {
+            console.log(fileDialogTest.currentFile);
+            var check = fileio.write(fileDialogTest.currentFile);
+            console.log(check);
+        }
+    }
+
+    FileDialog {
+        id: playlistDialog
+        title: "Choose a .txt file";
+        onAccepted: {
+            console.log(playlistDialog.currentFile);
+            fileio.setSource(playlistDialog.currentFile);
         }
     }
 
@@ -77,9 +96,53 @@ Item {
         width: 167
         height: 20
         text: "Open File Explorer"
-
         onClicked: {
-            fileDialog.open();
+            fileDialogChooseSong.open();
         }
     }
+
+    Text {
+        id: addSongtoPlaylist
+        text: qsTr("Add Songs to Playlists")
+        x: 40
+        y: 120
+        width: 60
+        height: 20
+    }
+
+    Button {
+        x: 286
+        y: 120
+        width: 167
+        height: 20
+        text: "Open File Explorer"
+        onClicked: {
+            fileDialogTest.open();
+        }
+    }
+
+    Text {
+        id: playlistSelect
+        text: qsTr("Select a playlist")
+        x: 40
+        y: 160
+        width: 60
+        height: 20
+    }
+
+    Button {
+        x: 286
+        y: 160
+        width: 167
+        height: 20
+        text: "Open File Explorer"
+        onClicked: {
+            playlistDialog.open();
+        }
+    }
+
+    Item {
+        id: __materialLibrary__
+    }
+
 }

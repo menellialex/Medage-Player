@@ -6,20 +6,23 @@
 #define FILEIO_H
 
 #include <QObject>
+#include <QQmlComponent>
 
 class FileIO : public QObject
 {
     Q_OBJECT
-public:
     Q_PROPERTY(QString source
                READ source
                WRITE setSource
                NOTIFY sourceChanged)
+    QML_ELEMENT
+
+public:
 
     explicit FileIO(QObject *parent = 0);
 
     Q_INVOKABLE QString read();
-    Q_INVOKABLE bool write(const QString& data);
+    Q_INVOKABLE int write(const QString& data);
 
     QString source() { return mSource; };
 
@@ -32,7 +35,7 @@ signals:
 
 private:
     QString mSource;
-
+    QUrl urlSource;
 };
 
 #endif // FILEIO_H

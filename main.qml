@@ -3,9 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 import QtMultimedia 6.3
-import QtQuick3D 6.3
 import FileIO 1.0
-import SongQueue 1.0
 
 Window {
     id: root
@@ -14,21 +12,22 @@ Window {
     visible: true
     title: qsTr("Medage Player")
 
-    SongQueue {
-        //queue for the songs
-        id: songQueue
-    }
-
-    PlayControl {
-        //this controls the backwards, forwards, pause and play features
-        mediaPlayer: mediaPlayer
-        SongQueue: songQueue
-    }
+    property alias songtitle: songtitle
+    property alias album: album
+    property alias artist: artist
+    property alias albumart: albumart
 
     FileIO {
         //fileio item for everything
         id: fileio
         onError: {console.log(msg);}
+    }
+
+    //Create SongController and PlayControl and metadata items
+    PlayControl {
+        //this controls the backwards, forwards, pause and play features
+        id: playControl
+        mediaPlayer: mediaPlayer
     }
 
     SongController {
@@ -37,6 +36,25 @@ Window {
         mediaPlayer: mediaPlayer
     }
 
+    MetaDataGetter {
+        id: metaData
+    }
+
+    MediaPlayer {
+
+        id: mediaPlayer
+        audioOutput: audioOut
+
+        onTracksChanged:
+        {
+            metaData.read(mediaPlayer.metaData);
+        }
+    }
+
+    AudioOutput {
+        id: audioOut
+        volume: volumeSlider.value
+    }
 
     Slider {
         id: volumeSlider
@@ -50,7 +68,7 @@ Window {
     }
 
     Text {
-        id: title
+        id: songtitle
         x: 93
         y: 226
         width: 74
@@ -76,7 +94,7 @@ Window {
     }
 
     Text {
-        id: text3
+        id: album
         x: 101
         y: 301
         width: 57
@@ -166,11 +184,8 @@ Window {
             SettingsTab{
                 mediaPlayer: mediaPlayer
                 fileio: fileio
-
             }
-
         }
-
     }
 
     StackLayout {
@@ -184,10 +199,9 @@ Window {
         Item {
             id: albumTab
             Image {
-                id: image
+                id: albumart
                 width: 171
                 height: 157
-                source: "ITCOTD.png"
                 fillMode: Image.PreserveAspectFit
             }
         }
@@ -228,16 +242,6 @@ Window {
 
     Item {
         id: __materialLibrary__
-    }
-
-    MediaPlayer {
-        id: mediaPlayer
-        audioOutput: audioOut
-    }
-
-    AudioOutput {
-        id: audioOut
-        volume: volumeSlider.value
     }
 
 }
